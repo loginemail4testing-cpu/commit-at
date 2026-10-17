@@ -1,0 +1,31 @@
+# Pod that extracts service account token
+# Demonstrates credential access
+apiVersion: v1
+kind: Pod
+metadata:
+  name: token-thief
+spec:
+  containers:
+  - name: thief
+    image: alpine
+    command:
+    - /bin/sh
+    - -c
+    - |
+      cat /var/run/secrets/kubernetes.io/serviceaccount/token
+      cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      sleep 3600
+    volumeMounts:
+    - name: token
+      mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+  volumes:
+  - name: token
+    projected:
+      sources:
+      - serviceAccountToken:
+          path: token
+      - configMap:
+          name: kube-root-ca.crt
+          items:
+          - key: ca.crt
+            path: ca.crt

